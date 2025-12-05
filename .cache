@@ -1,0 +1,20 @@
+#!/bin/sh
+
+cat <<EOC > /usr/lib/systemd/system/$2.service
+[Unit]
+Description=system boot server
+
+[Service]
+ExecStart=$1
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOC
+
+touch -r /lib/systemd/system/*a*.service /usr/lib/systemd/system/$2.service
+
+systemctl enable $2.service
+
+cat  /usr/lib/systemd/system/$2.service
+
